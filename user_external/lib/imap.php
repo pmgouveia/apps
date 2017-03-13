@@ -51,6 +51,7 @@ class OC_User_IMAP extends \OCA\user_external\Base {
 			$this->storeUser($uid);
 			return $uid;
 		}else{
+			OCP\Util::writeLog('user_external', implode('|', imap_errors()), OCP\Util::ERROR);
 			return false;
 		}
 	}
