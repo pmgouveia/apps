@@ -43,7 +43,7 @@ class OC_User_IMAP extends \OCA\user_external\Base {
 			return false;
 		}
 		$mbox = @imap_open($this->mailbox, $uid, $password, OP_HALFOPEN, 1);
-		imap_errors();
+		OCP\Util::writeLog('user_external', implode('|', imap_errors()), OCP\Util::ERROR);
 		imap_alerts();
 		if($mbox !== FALSE) {
 			imap_close($mbox);
@@ -51,7 +51,6 @@ class OC_User_IMAP extends \OCA\user_external\Base {
 			$this->storeUser($uid);
 			return $uid;
 		}else{
-			OCP\Util::writeLog('user_external', implode('|', imap_errors()), OCP\Util::ERROR);
 			return false;
 		}
 	}
